@@ -1,0 +1,24 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.venv/
+
+# Build outputs
+build/
+*.o
+*.obj
+*.a
+*.so
+aupir/matching/engine
+aupir/matching/engine_validation
+aupir/matching/test_dcf_eval
+evaluation/baseline/worker
+
+# Local build manifests embed absolute host paths
+*manifest.json
+
+# Local experiment output
+artifacts/
+*.stderr
+*.log
