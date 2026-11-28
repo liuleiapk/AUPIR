@@ -5,11 +5,11 @@ from pathlib import Path
 HERE=Path(__file__).resolve().parent
 ROOT=HERE.parents[1]
 K=os.environ.get('KUNLUN_ROOT')
-cfgs=[HERE/'worker',HERE/'build.py',ROOT/'evaluation/baseline/legacy_engine_20261114.h',ROOT/'aupir/matching/dcf_bit_eval.h']
+cfgs=[HERE/'worker',HERE/'build.py',ROOT/'evaluation/baseline/legacy_engine_20261114.h',ROOT/'epbkpir/matching/dcf_bit_eval.h']
 if K:cfgs.append(Path(K)/'mpc/p2frpsu/DCF/DCFClient.cpp')
-m=json.loads((ROOT/'aupir/matching/build_manifest.json').read_text())
+m=json.loads((ROOT/'epbkpir/matching/build_manifest.json').read_text())
 cmd=m['command'][:]
-cmd[cmd.index(str(ROOT/'aupir/matching/engine.cpp'))]=str(HERE/'worker.cpp')
+cmd[cmd.index(str(ROOT/'epbkpir/matching/engine.cpp'))]=str(HERE/'worker.cpp')
 cmd[cmd.index('-o')+1]=str(HERE/'worker')
 subprocess.run(cmd,check=True)
 inputs=[Path(x) for x in cmd if x.endswith(('.cpp','.a','.so')) and Path(x).is_file()]

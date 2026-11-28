@@ -699,7 +699,7 @@ int serve(int argc, char **argv) {
         if(hdr.reserved==4 && (matrix_path.empty()||hdr.band_width!=hdr.out_count||hdr.out_count!=hdr.qcap+hdr.lambda_rank||hdr.ls_seed!=0))
             throw std::runtime_error("missing/mismatched explicit OCC Setup");
         load_ls_matrix(matrix_path,hdr.out_count,h);
-        // AUPIR Algorithm 2, line 17: mask the H raw bucket shares BEFORE
+        // EPBKPIR Algorithm 2, line 17: mask the H raw bucket shares BEFORE
         // LSObvCompress. The one-use mask is supplied only by this server's
         // private session process. Legacy requests without a third path retain
         // their original behavior. No mask or seed is delivered to the client.

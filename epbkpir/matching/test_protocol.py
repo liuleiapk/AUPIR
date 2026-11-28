@@ -20,8 +20,8 @@ class ProtocolTests(unittest.TestCase):
     def test_real_protocol(self):
         cases=[('accept',('AND',('EQ','sex',1),('GT','age',35))),('less',('LT','age',35)),('or',('OR',('EQ','sex',0),('GT','age',35))),('not',('NOT',('GT','age',35))),('zero',('LT','age',0)),('max',('GT','age',2**32-1)),('boundary',('LT','age',2**32-1)),('equalmax',('EQ','age',2**32-1)),('gtzero',('GT','age',0)),('eqzero',('EQ','age',0)),('ltone',('LT','age',1)),('nested',('OR',('AND',('EQ','sex',1),('GT','age',35)),('NOT',('LT','age',1))))]
         cases += [('range',('AND',('GE','age',35),('LE','age',50))),('empty-range',('AND',('GT','age',2**32-1),('LE','age',2**32-1))),('full',('GE','age',0)),('ne',('NE','age',35)),('double-not',('NOT',('NOT',('EQ','sex',1)))),('compound-not',('NOT',('AND',('EQ','sex',1),('GT','age',35))))]
-        from aupir.online.session import SERVER
-        self.assertTrue(SERVER.exists(),'build aupir/online/build.py first')
+        from epbkpir.online.session import SERVER
+        self.assertTrue(SERVER.exists(),'build epbkpir/online/build.py first')
         with tempfile.TemporaryDirectory() as t:
             root=Path(t)/'db';prepare(root,ROWS,DATA,FIELDS,block_size=64,capacity=128)
             shapes=[];commitments=set()

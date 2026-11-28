@@ -10,9 +10,9 @@ build/
 *.obj
 *.a
 *.so
-aupir/matching/engine
-aupir/matching/engine_validation
-aupir/matching/test_dcf_eval
+epbkpir/matching/engine
+epbkpir/matching/engine_validation
+epbkpir/matching/test_dcf_eval
 evaluation/baseline/worker
 
 # Local build manifests embed absolute host paths

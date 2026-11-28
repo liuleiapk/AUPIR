@@ -6,7 +6,7 @@ the descriptors themselves as required by Algorithm 2, not descriptor shares.
 """
 import hashlib,json,secrets
 from pathlib import Path
-from aupir.layout import build_database,LayoutKind
+from epbkpir.layout import build_database,LayoutKind
 from .session import DESC
 from .parameters import occ_parameters,CAPACITY_FLOOR
 def prepare(root,rows,contents,fields,*,block_size=16384,capacity=128,version=1,object_order=None):
@@ -25,7 +25,7 @@ def prepare(root,rows,contents,fields,*,block_size=16384,capacity=128,version=1,
         loc=db.locators[pos]
         raw=DESC.pack(1,version,secrets.token_bytes(16),loc.logical_index,loc.start_block,loc.true_length,loc.key,loc.nonce,loc.tag,loc.block_count)
         desc[row]=raw+hashlib.sha256(raw).digest()[:16]
-    public={'protocol':'AUPIR-TCP-BFS-OCC-v1','N':len(rows),'fields':fields,'B':block_size,'Q':Q,'requested_capacity':capacity,'version':version,'blocks':len(image)//block_size,'data_blocks':len(db.blocks),'descriptor_bytes':128,'tagged_descriptor_bytes':144,**occ,'bfs_kappa':128,'bfs_checksum_bits':128,'capacity_policy':'fixed supported-query upper bound with public floor 128 (service choice)','dummy_policy':'virtual zero queries; no stored Q dummy blocks','storage_bytes_per_server':len(image)}
+    public={'protocol':'EPBKPIR-TCP-BFS-OCC-v1','N':len(rows),'fields':fields,'B':block_size,'Q':Q,'requested_capacity':capacity,'version':version,'blocks':len(image)//block_size,'data_blocks':len(db.blocks),'descriptor_bytes':128,'tagged_descriptor_bytes':144,**occ,'bfs_kappa':128,'bfs_checksum_bits':128,'capacity_policy':'fixed supported-query upper bound with public floor 128 (service choice)','dummy_policy':'virtual zero queries; no stored Q dummy blocks','storage_bytes_per_server':len(image)}
     root.mkdir(parents=True,exist_ok=False);(root/'public.json').write_text(json.dumps(public,indent=2))
     for sid in (0,1):
         d=root/f's{sid}';d.mkdir(mode=0o700)

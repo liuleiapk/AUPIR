@@ -1,4 +1,4 @@
-// AUPIR Algorithm 2. IPBM is imported unchanged; party-local backend pipe
+// EPBKPIR Algorithm 2. IPBM is imported unchanged; party-local backend pipe
 // and files never cross the client/server boundary. All party messages use TCP.
 #include "../matching/retrieval.h"
 #include <openssl/sha.h>
@@ -62,7 +62,7 @@ int main(int argc,char** argv){try{
  if(r!=Q+40||width!=r||ls!=0||r>=H)throw std::runtime_error("OCC finite parameter profile");
  Backend worker({backend,"serve","indirected_file",std::to_string(blocks),std::to_string(B),std::to_string(Q),std::to_string(B),std::to_string(version),std::to_string(pbc),std::to_string(sid),"paper_faithful_optimized",std::to_string(threads),"scalar","row_major","fixed_explicit",dir+"/database.img"});auto setup=worker.line();
  int listener=socket(AF_INET,SOCK_STREAM,0),yes=1;setsockopt(listener,SOL_SOCKET,SO_REUSEADDR,&yes,sizeof yes);sockaddr_in addr{};addr.sin_family=AF_INET;addr.sin_addr.s_addr=htonl(INADDR_LOOPBACK);addr.sin_port=htons(std::stoi(argv[5]));if(bind(listener,(sockaddr*)&addr,sizeof addr)||listen(listener,1))throw std::runtime_error("listen");
- IOService io(1);Session session(io,argv[4],sid?SessionMode::Client:SessionMode::Server,"aupir-online-v1");auto ch=session.addChannel();auto base=Clock::now();auto basecp=cpu();Protocol p(sid,ch);sync_peer(ch,sid);
+ IOService io(1);Session session(io,argv[4],sid?SessionMode::Client:SessionMode::Server,"epbkpir-online-v1");auto ch=session.addChannel();auto base=Clock::now();auto basecp=cpu();Protocol p(sid,ch);sync_peer(ch,sid);
  std::string hello=session.getName()+"`"+std::to_string(session.getSessionID())+"`_autoName_0`_autoName_0";
  Metrics bm{{"base_ot_seconds",elapsed(base)},{"base_ot_cpu_seconds",cpu()-basecp},{"peer_sent_bytes",double(ch.getTotalDataSent())},{"negotiation_sent_bytes",double(sid?4+hello.size():1)},{"initialization_seconds",elapsed(init)}};
  int fd=accept(listener,nullptr,nullptr);close(listener);if(fd<0)throw std::runtime_error("accept");setsockopt(fd,IPPROTO_TCP,TCP_NODELAY,&yes,sizeof yes);tx(fd,"R",1);std::cout<<"{\"session\":"<<bm.json()<<",\"backend\":"<<setup.substr(0,setup.find_last_not_of("\r\n")+1)<<"}"<<std::endl;

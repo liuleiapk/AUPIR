@@ -3,7 +3,7 @@ from pathlib import Path
 from .pipeline import prepare,query
 
 def main():
-    ap=argparse.ArgumentParser(description='AUPIR: IPBM -> private BFS descriptors -> Batch PIR/OCC over TCP')
+    ap=argparse.ArgumentParser(description='EPBKPIR: IPBM -> private BFS descriptors -> Batch PIR/OCC over TCP')
     ap.add_argument('--prepare-json',type=Path);ap.add_argument('--snapshot',type=Path);ap.add_argument('--predicate-json',type=Path);ap.add_argument('--output-dir',type=Path);ap.add_argument('--demo',action='store_true')
     a=ap.parse_args()
     if a.prepare_json:

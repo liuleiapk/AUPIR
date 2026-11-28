@@ -11,8 +11,8 @@ from collections import defaultdict
 from pathlib import Path
 ROOT=Path(__file__).resolve().parents[2]
 sys.path.insert(0,str(ROOT))
-from aupir.matching.compiler import compile_query,public_template
-from aupir.matching.transport import ServerPair,prepare_query,ENGINE
+from epbkpir.matching.compiler import compile_query,public_template
+from epbkpir.matching.transport import ServerPair,prepare_query,ENGINE
 from evaluation.final.cases import cases,vector,WORKLOADS
 
 
@@ -189,8 +189,8 @@ def main():
     config=dict(command=[sys.executable,*sys.argv],transport='LOCAL_LOOPBACK_TCP_NO_TLS',timing='DEFAULT_COLD_SESSION_REQUEST_MATERIALS_GENERATED_AFTER_REQUEST',
         cpus=sorted(os.sched_getaffinity(0)),compute_threads_per_server=1,io_service_threads_per_server=1,platform=platform.platform(),
         cpu_model=subprocess.check_output(['lscpu'],text=True),warmups=args.warmups,repeats=args.repeats,
-        production_build=json.loads((ROOT/'aupir/matching/build_manifest.json').read_text()),
-        validation_build=json.loads((ROOT/'aupir/matching/validation_build_manifest.json').read_text()),
+        production_build=json.loads((ROOT/'epbkpir/matching/build_manifest.json').read_text()),
+        validation_build=json.loads((ROOT/'epbkpir/matching/validation_build_manifest.json').read_text()),
         runner_sha256={str(p):hashlib.sha256(p.read_bytes()).hexdigest() for p in [Path(__file__),Path(__file__).with_name('cases.py')]})
     (args.out/'config.json').write_text(json.dumps(config,indent=2))
     if args.validate or args.validation_only:validate(args.out)

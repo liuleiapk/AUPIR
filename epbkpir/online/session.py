@@ -8,9 +8,9 @@ must supply the paper's authenticated confidential channels.
 from __future__ import annotations
 import hashlib,json,math,os,resource,secrets,struct,subprocess,time
 from pathlib import Path
-from aupir.matching.compiler import compile_query,public_template
-from aupir.matching.transport import ServerPair,prepare_query,receive
-from aupir.layout import Locator,recover_object
+from epbkpir.matching.compiler import compile_query,public_template
+from epbkpir.matching.transport import ServerPair,prepare_query,receive
+from epbkpir.layout import Locator,recover_object
 from . import bfs
 from .parameters import validate_public
 ROOT=Path(__file__).resolve().parents[2]
@@ -33,7 +33,7 @@ class FullSession:
     def __init__(self,snapshot:Path,template_expr,*,threads=1):
         start=time.perf_counter();self.snapshot=Path(snapshot)
         self.public=json.loads((self.snapshot/'public.json').read_text())
-        if self.public.get('protocol')!='AUPIR-TCP-BFS-OCC-v1':raise ValueError('snapshot requires new DO installation')
+        if self.public.get('protocol')!='EPBKPIR-TCP-BFS-OCC-v1':raise ValueError('snapshot requires new DO installation')
         validate_public(self.public)
         self.threads=threads;self.epoch=0;self.ready=False;self.last_preprocessing=None
         atoms,gates=compile_query(template_expr,self.public['fields']);self.shape=(atoms,gates)

@@ -2,7 +2,7 @@
 import json,subprocess,sys,time,resource
 from pathlib import Path
 sys.path.insert(0,str(Path(__file__).resolve().parents[2]))
-from aupir.matching.pipeline import BACKEND,PBC
+from epbkpir.matching.pipeline import BACKEND,PBC
 root=Path(sys.argv[1]);p=json.loads((root/'public.json').read_text())
 cmd=[str(BACKEND),'serve','indirected_file',str(p['blocks']),str(p['B']),str(p['Q']),str(p['B']),str(p['version']),str(PBC),'local','paper_faithful_optimized','1','scalar','row_major','fixed',str(root/'database.img')]
 start=time.perf_counter()

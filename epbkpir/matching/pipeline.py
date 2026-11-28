@@ -4,14 +4,14 @@ import json, os, secrets, shlex, shutil, struct, subprocess, sys, time, resource
 from pathlib import Path
 ROOT=Path(__file__).resolve().parents[2]
 if str(ROOT) not in sys.path: sys.path.insert(0,str(ROOT))
-from aupir.layout import build_database, LayoutKind, Locator, recover_object
+from epbkpir.layout import build_database, LayoutKind, Locator, recover_object
 HERE=Path(__file__).resolve().parent
 ENGINE=HERE/'engine'
 BACKEND=ROOT/'backend/build/backend'
 DESC=struct.Struct('>BQ16sIQQ32s12s16s23x')
 assert DESC.size==128
-from aupir.matching.compiler import compile_query, public_template
-from aupir.matching.transport import ServerPair, prepare_query
+from epbkpir.matching.compiler import compile_query, public_template
+from epbkpir.matching.transport import ServerPair, prepare_query
 PBC=0x50424332303234
 
 def xor(a,b):
@@ -148,9 +148,9 @@ def query_legacy(root:Path,expr,output:Path,*,force_route_failure=False,transpor
 # Default full-protocol entry points. The historical file bridge remains
 # explicitly named for reproducing old experiments; never a failure fallback.
 def prepare(*args,**kwargs):
-    from aupir.online.install import prepare as install
+    from epbkpir.online.install import prepare as install
     return install(*args,**kwargs)
 
 def query(*args,**kwargs):
-    from aupir.online.session import query as execute
+    from epbkpir.online.session import query as execute
     return execute(*args,**kwargs)
